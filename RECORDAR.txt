@@ -1,0 +1,74 @@
+RECORDAR - FRONTEND (Proyecto-Investigacion_Frontend)
+======================================================
+
+ORDEN PARA ECHAR A ANDAR LA PAGINA EN LOCAL
+  1. Encender MySQL.
+  2. Encender el backend (carpeta Proyecto-Investigacion_Backend):   npm run dev
+  3. Encender el frontend (esta carpeta):                            npm run dev
+
+  Son DOS terminales abiertas al mismo tiempo: una para el backend y otra
+  para el frontend.
+
+
+CADA VEZ QUE QUIERA USARLO
+--------------------------
+  1. Con el backend ya encendido, abrir otra terminal en esta carpeta y ejecutar:
+
+         npm run dev
+
+  2. Abrir en el navegador:
+
+         http://localhost:5173
+
+  3. Dejar la terminal abierta. Se apaga con Ctrl + C.
+     Los cambios en el codigo se ven solos al guardar, sin reiniciar.
+
+
+SOLO LA PRIMERA VEZ (o en una computadora nueva)
+------------------------------------------------
+  1. npm install
+  2. Copiar .env.example como .env
+     (solo se edita si la API no esta en http://localhost:3000/api)
+
+
+DIRECCIONES DE LA PAGINA
+------------------------
+  http://localhost:5173/                 Catalogo de proyectos
+  http://localhost:5173/proyecto/1       Detalle de un proyecto (el numero es su id)
+  http://localhost:5173/login            Inicio de sesion de administrador
+  http://localhost:5173/admin            Panel para crear, editar y eliminar
+
+
+DETALLES IMPORTANTES
+--------------------
+  - El usuario y la contrasena de administrador se crean desde el BACKEND:
+         npm run crear-admin -- <usuario> <contrasena>
+  - La sesion dura 8 horas; despues hay que volver a iniciar sesion.
+  - Debe abrir en el puerto 5173. Si Vite avisa que uso otro puerto (5174...),
+    es porque ya habia otro frontend encendido: cerrarlo y volver a intentar,
+    porque el backend solo acepta peticiones desde el 5173.
+  - Si cambio algo en .env hay que reiniciar: Ctrl + C y otra vez npm run dev.
+  - Las carpetas node_modules y dist NO se suben a GitHub (ya estan en .gitignore).
+  - Los colores, tipografias y espaciados del diseno estan en tailwind.config.js.
+  - La organizacion de carpetas esta explicada en ARQUITECTURA.md.
+
+
+OTROS COMANDOS
+--------------
+  npm run build      Genera la version final en la carpeta dist
+  npm run preview    Muestra esa version final para revisarla
+  npm run lint       Revisa el codigo
+
+
+SI ALGO FALLA
+-------------
+  La pagina abre pero dice "No se pudieron cargar los proyectos"
+        El backend esta apagado, o MySQL esta apagado.
+  En la consola del navegador (F12) aparece un error de CORS
+        El frontend abrio en un puerto distinto al 5173 (ver arriba).
+  "El usuario o la contrasena son incorrectos"
+        Revisar mayusculas; si hace falta, cambiar la contrasena desde el backend.
+  La pagina se ve sin estilos
+        Falto npm install, o se borro postcss.config.js / tailwind.config.js.
+  Me saca del panel y regresa al login
+        La sesion expiro (8 horas) o se reinicio el backend con otro JWT_SECRET.
