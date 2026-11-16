@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-surface font-body-md text-body-md text-on-surface antialiased;
+    }
+}
+
+/* Iconos de Material Symbols (se cargan en index.html) */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    line-height: 1;
+    user-select: none;
+}
