@@ -31,7 +31,7 @@ const Login = () => {
             localStorage.setItem('token', data.token);
 
             // Actualizamos el estado global y entramos al panel
-            setAuth({ usuario: data.usuario });
+            setAuth({ id: data.id, usuario: data.usuario });
             navigate('/admin');
         } catch (err) {
             setError(err.response?.data?.mensaje || 'No se pudo conectar con el servidor. Intenta de nuevo más tarde.');

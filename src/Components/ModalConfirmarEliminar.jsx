@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import Icono from './Icono';
 
-// Diálogo de confirmación antes de eliminar un proyecto
-const ModalConfirmarEliminar = ({ proyecto, eliminando, onCancelar, onConfirmar }) => {
+// Diálogo de confirmación antes de eliminar. El mensaje se pasa como contenido (children)
+const ModalConfirmarEliminar = ({ titulo, children, eliminando, onCancelar, onConfirmar }) => {
     // Cerrar con la tecla Escape
     useEffect(() => {
         const alPresionar = (e) => {
@@ -27,18 +27,12 @@ const ModalConfirmarEliminar = ({ proyecto, eliminando, onCancelar, onConfirmar 
                     <div>
                         <span className="font-label-sm text-label-sm text-error uppercase font-bold tracking-wider">Confirmación</span>
                         <h3 id="titulo-eliminar" className="font-headline-sm text-[18px] text-on-surface leading-tight mt-0.5">
-                            ¿Eliminar proyecto definitivamente?
+                            {titulo}
                         </h3>
                     </div>
                 </div>
 
-                <p className="font-body-md text-body-md text-secondary">
-                    ¿Está seguro de eliminar el proyecto{' '}
-                    <span className="font-code-tech text-code-tech bg-surface-container text-on-surface px-1.5 py-0.5 rounded">
-                        {proyecto.clave.trim()}
-                    </span>
-                    ? Esta acción no se puede deshacer.
-                </p>
+                <p className="font-body-md text-body-md text-secondary break-words">{children}</p>
 
                 <div className="flex items-center justify-end gap-space-sm pt-space-xs">
                     <button

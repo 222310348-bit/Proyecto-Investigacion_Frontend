@@ -38,6 +38,7 @@ y elimine desde la página. Consume la API de `Proyecto-Investigacion_Backend`.
 | `/proyecto/:id` | Detalle de un proyecto: clave, título, objetivo y participantes |
 | `/login` | Inicio de sesión de administrador |
 | `/admin` | Tabla para crear, editar y eliminar proyectos (requiere sesión) |
+| `/admin/usuarios` | Alta y gestión de administradores (requiere sesión) |
 
 ## Notas sobre los datos
 
@@ -45,6 +46,16 @@ y elimine desde la página. Consume la API de `Proyecto-Investigacion_Backend`.
   `CONACYT`, igual que en el sitio original y en el backend.
 - Los participantes se guardan en la base como un solo texto separado por `/`. El
   formulario los muestra como etiquetas y los vuelve a unir al guardar.
+
+## Administradores
+
+- Se dan de alta con un correo institucional (`@itslerdo.edu.mx`), que será su usuario.
+- La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula, un
+  número y un símbolo. El formulario marca cada requisito conforme se cumple.
+- Desde el panel se puede cambiar la contraseña de cualquier cuenta y eliminar
+  cuentas, excepto la propia.
+- Estas reglas también las valida el backend; el dominio y los requisitos del
+  frontend están en `src/utils/usuarioUtils.js`.
 
 ## Otros comandos
 

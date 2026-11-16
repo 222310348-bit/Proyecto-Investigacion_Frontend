@@ -36,13 +36,18 @@ DIRECCIONES DE LA PAGINA
   http://localhost:5173/                 Catalogo de proyectos
   http://localhost:5173/proyecto/1       Detalle de un proyecto (el numero es su id)
   http://localhost:5173/login            Inicio de sesion de administrador
-  http://localhost:5173/admin            Panel para crear, editar y eliminar
+  http://localhost:5173/admin            Panel: crear, editar y eliminar proyectos
+  http://localhost:5173/admin/usuarios   Panel: dar de alta y gestionar administradores
 
 
 DETALLES IMPORTANTES
 --------------------
-  - El usuario y la contrasena de administrador se crean desde el BACKEND:
-         npm run crear-admin -- <usuario> <contrasena>
+  - Los administradores se dan de alta en el panel, pestana "Administradores".
+    El usuario siempre es un correo @itslerdo.edu.mx y la contrasena debe tener
+    minimo 8 caracteres, una mayuscula, una minuscula, un numero y un simbolo.
+  - Si no puedo entrar con ninguna cuenta, se crea o se le cambia la contrasena
+    desde el BACKEND:
+         npm run crear-admin -- <correo institucional> <contrasena>
   - La sesion dura 8 horas; despues hay que volver a iniciar sesion.
   - Debe abrir en el puerto 5173. Si Vite avisa que uso otro puerto (5174...),
     es porque ya habia otro frontend encendido: cerrarlo y volver a intentar,

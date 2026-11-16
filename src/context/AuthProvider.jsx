@@ -1,5 +1,5 @@
 // src/context/AuthProvider.jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { AuthContext } from './AuthContext';
 import authService from '../services/authService';
 
@@ -28,10 +28,11 @@ export const AuthProvider = ({ children }) => {
         autenticarUsuario();
     }, []);
 
-    const cerrarSesion = () => {
+    // useCallback evita que la función cambie en cada render (otras páginas dependen de ella)
+    const cerrarSesion = useCallback(() => {
         localStorage.removeItem('token');
         setAuth({});
-    };
+    }, []);
 
     return (
         <AuthContext.Provider value={{ auth, setAuth, cargando, cerrarSesion }}>

@@ -27,17 +27,21 @@ Proyecto-Investigacion_Frontend/
     │   └── AppRouter.jsx       Rutas públicas y privadas
     ├── services/
     │   ├── authService.js      login y perfil
-    │   └── proyectoService.js  obtenerTodos, obtenerPorId, crear, actualizar, eliminar
+    │   ├── proyectoService.js  obtenerTodos, obtenerPorId, crear, actualizar, eliminar
+    │   └── usuarioService.js   obtenerTodos, crear, cambiarPassword, eliminar
     ├── utils/
-    │   └── proyectoUtils.js    Tipo por clave, participantes, búsqueda, límites de campos
+    │   ├── proyectoUtils.js    Tipo por clave, participantes, búsqueda, límites de campos
+    │   └── usuarioUtils.js     Dominio del correo institucional y requisitos de la contraseña
     ├── Components/
     │   ├── MainLayout.jsx              Encabezado + contenido + pie de las páginas públicas
+    │   ├── AdminLayout.jsx             Encabezado y pestañas del panel de administración
     │   ├── Header.jsx                  Logo, título y botón "Administrador"
     │   ├── Footer.jsx                  Enlaces institucionales
     │   ├── ProtectedRoute.jsx          Bloquea las rutas privadas si no hay sesión
     │   ├── ProyectoCard.jsx            Tarjeta de proyecto del catálogo
     │   ├── EtiquetaTipo.jsx            Insignia "Proyecto Interno" / "Proyecto Externo"
-    │   ├── ModalProyecto.jsx           Formulario para crear y editar
+    │   ├── ModalProyecto.jsx           Formulario para crear y editar proyectos
+    │   ├── ModalUsuario.jsx            Alta de administrador y cambio de contraseña
     │   ├── ModalConfirmarEliminar.jsx  Confirmación antes de eliminar
     │   ├── Aviso.jsx                   Aviso de éxito o error
     │   └── Icono.jsx                   Icono de Material Symbols
@@ -45,7 +49,8 @@ Proyecto-Investigacion_Frontend/
         ├── Proyectos.jsx        Pantalla 1: catálogo con buscador y pestañas
         ├── DetalleProyecto.jsx  Pantalla 2: detalle de un proyecto
         ├── Login.jsx            Pantalla 3: inicio de sesión de administrador
-        └── AdminProyectos.jsx   Pantalla 4: tabla CRUD de proyectos
+        ├── AdminProyectos.jsx   Pantalla 4: tabla CRUD de proyectos
+        └── AdminUsuarios.jsx    Gestión de administradores
 ```
 
 ## Rutas
@@ -56,6 +61,7 @@ Proyecto-Investigacion_Frontend/
 | `/proyecto/:id` | `DetalleProyecto` | Público |
 | `/login` | `Login` | Público |
 | `/admin` | `AdminProyectos` | Solo administrador |
+| `/admin/usuarios` | `AdminUsuarios` | Solo administrador |
 
 Cualquier otra dirección regresa a `/`.
 

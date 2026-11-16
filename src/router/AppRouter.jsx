@@ -4,7 +4,9 @@ import ProtectedRoute from 'src/Components/ProtectedRoute.jsx';
 import Proyectos from 'src/Pages/Proyectos.jsx';
 import DetalleProyecto from 'src/Pages/DetalleProyecto.jsx';
 import Login from 'src/Pages/Login.jsx';
+import AdminLayout from 'src/Components/AdminLayout.jsx';
 import AdminProyectos from 'src/Pages/AdminProyectos.jsx';
+import AdminUsuarios from 'src/Pages/AdminUsuarios.jsx';
 
 const AppRouter = () => {
     return (
@@ -19,7 +21,10 @@ const AppRouter = () => {
 
                 {/* Rutas privadas: solo con sesión de administrador (token necesario) */}
                 <Route element={<ProtectedRoute />}>
-                    <Route path="/admin" element={<AdminProyectos />} />
+                    <Route element={<AdminLayout />}>
+                        <Route path="/admin" element={<AdminProyectos />} />
+                        <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+                    </Route>
                 </Route>
 
                 {/* Cualquier otra dirección regresa al catálogo */}
