@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Icono from './Icono';
+import CampoParticipantes from './CampoParticipantes';
 import proyectoService from '../services/proyectoService';
-import { LIMITES, separarParticipantes, unirParticipantes, obtenerIniciales } from '../utils/proyectoUtils';
+import { LIMITES, separarParticipantes, unirParticipantes } from '../utils/proyectoUtils';
+import { construirDirectorio, limpiarNombre, mismaPersona } from '../utils/participantesUtils';
 
 const CLASE_CAMPO = 'w-full bg-surface-container-low rounded-lg text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container/30';
 
-// Ventana modal para crear o editar. Si 'proyecto' es null se crea uno nuevo
-const ModalProyecto = ({ proyecto, onCerrar, onGuardado, onSesionExpirada }) => {
+// Ventana modal para crear o editar. Si 'proyecto' es null se crea uno nuevo.
+// 'proyectos' son todos los registrados, para el historial de participantes
+const ModalProyecto = ({ proyecto, proyectos = [], onCerrar, onGuardado, onSesionExpirada }) => {
     const editando = Boolean(proyecto);
     const [formData, setFormData] = useState({
         clave: proyecto?.clave?.trim() || '',
@@ -18,6 +21,9 @@ const ModalProyecto = ({ proyecto, onCerrar, onGuardado, onSesionExpirada }) => 
     const [errores, setErrores] = useState({});
     const [errorGeneral, setErrorGeneral] = useState('');
     const [guardando, setGuardando] = useState(false);
+
+    // Personas registradas en los demás proyectos
+    const directorio = useMemo(() => construirDirectorio(proyectos, proyecto?.id), [proyectos, proyecto]);
 
     // Cerrar con la tecla Escape
     useEffect(() => {
@@ -36,29 +42,15 @@ const ModalProyecto = ({ proyecto, onCerrar, onGuardado, onSesionExpirada }) => 
 
     // Devuelve la lista con el nombre que esté escrito en el campo (si hay alguno)
     const listaConPendiente = () => {
-        const nombre = nuevoParticipante.trim();
-        if (!nombre || participantes.includes(nombre)) return participantes;
+        const nombre = limpiarNombre(nuevoParticipante);
+        if (!nombre || participantes.some((p) => mismaPersona(p, nombre))) return participantes;
         return [...participantes, nombre];
     };
 
-    const agregarParticipante = () => {
-        setParticipantes(listaConPendiente());
-        setNuevoParticipante('');
+    const cambiarParticipantes = (lista) => {
+        setParticipantes(lista);
         setErrores({ ...errores, participantes: undefined });
-    };
-
-    const quitarParticipante = (nombre) => {
-        setParticipantes(participantes.filter((p) => p !== nombre));
-        setErrores({ ...errores, participantes: undefined });
-    };
-
-    const manejarTeclaParticipante = (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault(); // Evita que Enter envíe el formulario
-            agregarParticipante();
-        } else if (e.key === 'Backspace' && !nuevoParticipante && participantes.length > 0) {
-            setParticipantes(participantes.slice(0, -1));
-        }
+        setErrorGeneral('');
     };
 
     // Mismas reglas que valida el backend
@@ -212,46 +204,15 @@ const ModalProyecto = ({ proyecto, onCerrar, onGuardado, onSesionExpirada }) => 
                         {errores.objetivo && <span className="font-body-sm text-body-sm text-error">{errores.objetivo}</span>}
                     </div>
 
-                    {/* Campo: Participantes (chips) */}
-                    <div className="flex flex-col gap-1.5">
-                        <div className="flex items-center justify-between">
-                            <label htmlFor="campo-participante" className="font-label-md text-label-md text-on-surface font-semibold">
-                                Participantes
-                            </label>
-                            <span className="font-label-sm text-label-sm text-secondary">
-                                {participantes.length} {participantes.length === 1 ? 'agregado' : 'agregados'}
-                            </span>
-                        </div>
-                        <div className="flex flex-wrap gap-2 p-2.5 bg-surface-container-low rounded-lg min-h-[50px] items-center">
-                            {participantes.map((nombre) => (
-                                <span key={nombre} className="inline-flex items-center gap-1.5 bg-surface-container-lowest px-2.5 py-1 rounded-full font-label-sm text-label-sm text-on-surface shadow-sm">
-                                    <span className="w-4 h-4 rounded-full bg-primary-container text-on-primary text-[10px] flex items-center justify-center font-bold">
-                                        {obtenerIniciales(nombre).charAt(0)}
-                                    </span>
-                                    <span>{nombre}</span>
-                                    <button
-                                        type="button"
-                                        onClick={() => quitarParticipante(nombre)}
-                                        title={`Quitar a ${nombre}`}
-                                        className="text-secondary hover:text-error ml-0.5 flex items-center"
-                                    >
-                                        <Icono nombre="close" className="text-[14px]" />
-                                    </button>
-                                </span>
-                            ))}
-                            <input
-                                id="campo-participante"
-                                type="text"
-                                value={nuevoParticipante}
-                                onChange={(e) => setNuevoParticipante(e.target.value.replace('/', ''))}
-                                onKeyDown={manejarTeclaParticipante}
-                                onBlur={agregarParticipante}
-                                placeholder="+ Agregar nombre y presionar Enter..."
-                                className="flex-1 bg-transparent font-body-sm text-body-sm text-on-surface placeholder:text-secondary focus:outline-none min-w-[200px] px-2 py-1"
-                            />
-                        </div>
-                        {errores.participantes && <span className="font-body-sm text-body-sm text-error">{errores.participantes}</span>}
-                    </div>
+                    {/* Campo: Participantes con historial de nombres registrados */}
+                    <CampoParticipantes
+                        participantes={participantes}
+                        onCambiar={cambiarParticipantes}
+                        texto={nuevoParticipante}
+                        onCambiarTexto={setNuevoParticipante}
+                        directorio={directorio}
+                        error={errores.participantes}
+                    />
                 </div>
 
                 {/* Pie */}

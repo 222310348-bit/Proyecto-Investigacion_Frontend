@@ -47,6 +47,18 @@ y elimine desde la página. Consume la API de `Proyecto-Investigacion_Backend`.
 - Los participantes se guardan en la base como un solo texto separado por `/`. El
   formulario los muestra como etiquetas y los vuelve a unir al guardar.
 
+## Homologación de participantes
+
+Al crear o editar un proyecto, el campo de participantes muestra el historial de
+personas ya registradas en los demás proyectos, con cuántos proyectos tiene cada una.
+Escribir filtra el historial; un clic agrega el nombre tal como está registrado.
+
+El formulario reconoce a la misma persona aunque esté escrita distinto (acentos,
+mayúsculas, títulos como `M.C.`, prefijos como `ITSLerdo:`, punto final u orden de las
+palabras) y avisa con un botón para usar el nombre registrado. También avisa cuando un
+nombre se parece mucho a otro (le falta una palabra o difiere en una o dos letras).
+Se guarda lo que el administrador decida; los avisos no bloquean el guardado.
+
 ## Administradores
 
 - Se dan de alta con un correo institucional (`@itslerdo.edu.mx`), que será su usuario.

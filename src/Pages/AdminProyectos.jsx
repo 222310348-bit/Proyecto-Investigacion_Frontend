@@ -248,6 +248,7 @@ const AdminProyectos = () => {
             {modal && (
                 <ModalProyecto
                     proyecto={modal.proyecto}
+                    proyectos={proyectos}
                     onCerrar={cerrarModal}
                     onGuardado={handleGuardado}
                     onSesionExpirada={salir}

@@ -31,10 +31,12 @@ Proyecto-Investigacion_Frontend/
     │   └── usuarioService.js   obtenerTodos, crear, cambiarPassword, eliminar
     ├── utils/
     │   ├── proyectoUtils.js    Tipo por clave, participantes, búsqueda, límites de campos
+    │   ├── participantesUtils.js  Historial de participantes y detección de nombres escritos distinto
     │   └── usuarioUtils.js     Dominio del correo institucional y requisitos de la contraseña
     ├── Components/
     │   ├── MainLayout.jsx              Encabezado + contenido + pie de las páginas públicas
     │   ├── AdminLayout.jsx             Encabezado y pestañas del panel de administración
+    │   ├── CampoParticipantes.jsx      Participantes de un proyecto con historial y avisos de homologación
     │   ├── Header.jsx                  Logo, título y botón "Administrador"
     │   ├── Footer.jsx                  Enlaces institucionales
     │   ├── ProtectedRoute.jsx          Bloquea las rutas privadas si no hay sesión
