@@ -13,7 +13,10 @@ Proyecto-Investigacion_Frontend/
 ├── eslint.config.js
 ├── .env.example                Dirección de la API
 ├── public/
-│   └── images/logo-itsl.png    Logo del sitio original
+│   └── images/                 Logos, banners oficiales y fotos (optimizadas desde el sitio original)
+│       ├── logo-itsl.png, logo-itsl-escudo.png, logo-conacyt.png
+│       ├── banner-institucional.png (encabezado), banner-sep.jpg (pie)
+│       └── portada-itsl.jpg, banda-*.jpg  Fotos de la portada y de las franjas entre secciones
 └── src/
     ├── main.jsx                Punto de entrada
     ├── App.jsx                 Envuelve la app con AuthProvider y AppRouter
@@ -32,13 +35,28 @@ Proyecto-Investigacion_Frontend/
     ├── utils/
     │   ├── proyectoUtils.js    Tipo por clave, participantes, búsqueda, límites de campos
     │   ├── participantesUtils.js  Historial de participantes y detección de nombres escritos distinto
+    │   ├── iconoUtils.js       Catálogo de iconos de proyecto e icono automático según el área de la clave
+    │   ├── institucionUtils.js Sitio oficial, contacto, redes, banners y secciones del menú
+    │   ├── modulosUtils.js     Servicios Especializados, Empresas Asociadas, Convocatorias y tarjetas de módulos
     │   └── usuarioUtils.js     Dominio del correo institucional y requisitos de la contraseña
     ├── Components/
     │   ├── MainLayout.jsx              Encabezado + contenido + pie de las páginas públicas
     │   ├── AdminLayout.jsx             Encabezado y pestañas del panel de administración
     │   ├── CampoParticipantes.jsx      Participantes de un proyecto con historial y avisos de homologación
-    │   ├── Header.jsx                  Logo, título y botón "Administrador"
-    │   ├── Footer.jsx                  Enlaces institucionales
+    │   ├── Header.jsx                  Banner oficial, menú de secciones, enlace al sitio del ITSL y botón "Administrador"
+    │   ├── MenuLateral.jsx             Menú de pantallas chicas (panel lateral)
+    │   ├── Footer.jsx                  Contacto, secciones, redes, enlace al sitio del ITSL y banner de la SEP
+    │   ├── BannerInstitucional.jsx     Franja de logotipos oficiales (imágenes definidas en institucionUtils)
+    │   ├── PortadaInicio.jsx           Portada con la fachada del instituto y número de proyectos
+    │   ├── EncabezadoSeccion.jsx       Título común de las secciones de la página principal
+    │   ├── TarjetaModulo.jsx           Tarjeta de cada módulo en la página principal
+    │   ├── SeccionServicios.jsx        Módulo Servicios Especializados
+    │   ├── SeccionEmpresas.jsx         Módulo Empresas Asociadas (enlaza a sus proyectos)
+    │   ├── SeccionConvocatorias.jsx    Módulo Convocatorias
+    │   ├── ImagenParallax.jsx          Imagen de fondo que se desplaza más lento que la página
+    │   ├── Aparecer.jsx                Desvanecido corto al entrar en pantalla
+    │   ├── IconoProyecto.jsx           Icono de un proyecto (elegido por el administrador o el de su área)
+    │   ├── SelectorIcono.jsx           Elección del icono en el formulario de proyecto
     │   ├── ProtectedRoute.jsx          Bloquea las rutas privadas si no hay sesión
     │   ├── ProyectoCard.jsx            Tarjeta de proyecto del catálogo
     │   ├── EtiquetaTipo.jsx            Insignia "Proyecto Interno" / "Proyecto Externo"
@@ -48,7 +66,7 @@ Proyecto-Investigacion_Frontend/
     │   ├── Aviso.jsx                   Aviso de éxito o error
     │   └── Icono.jsx                   Icono de Material Symbols
     └── Pages/
-        ├── Proyectos.jsx        Pantalla 1: catálogo con buscador y pestañas
+        ├── Proyectos.jsx        Pantalla 1: portada, módulos, catálogo con buscador y pestañas, servicios, empresas y convocatorias
         ├── DetalleProyecto.jsx  Pantalla 2: detalle de un proyecto
         ├── Login.jsx            Pantalla 3: inicio de sesión de administrador
         ├── AdminProyectos.jsx   Pantalla 4: tabla CRUD de proyectos
@@ -59,7 +77,7 @@ Proyecto-Investigacion_Frontend/
 
 | Ruta | Página | Acceso |
 |---|---|---|
-| `/` | `Proyectos` | Público |
+| `/` | `Proyectos` | Público. Secciones por ancla: `#inicio`, `#proyectos`, `#internos`, `#externos`, `#servicios`, `#empresas`, `#convocatorias` |
 | `/proyecto/:id` | `DetalleProyecto` | Público |
 | `/login` | `Login` | Público |
 | `/admin` | `AdminProyectos` | Solo administrador |
@@ -74,3 +92,7 @@ Cualquier otra dirección regresa a `/`.
 - El token se guarda en `localStorage` con la clave `token`; `axiosClient` lo envía en cada petición.
 - Estilos solo con clases de Tailwind usando los tokens de `tailwind.config.js`
   (por ejemplo `bg-primary-container`, `text-headline-sm`, `p-space-md`).
+- Colores institucionales: `primary` (#953133) es el rojo del escudo del ITSL y `accent` /
+  `accent-container` son su dorado. `primary-deep` se usa en el pie y en el detalle.
+- Los efectos al desplazarse (`ImagenParallax`, `Aparecer`) no usan librerías y se desactivan
+  si el sistema tiene activada la opción "reducir movimiento".

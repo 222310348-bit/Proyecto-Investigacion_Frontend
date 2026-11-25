@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import Icono from './Icono';
 import CampoParticipantes from './CampoParticipantes';
+import SelectorIcono from './SelectorIcono';
 import proyectoService from '../services/proyectoService';
 import { LIMITES, separarParticipantes, unirParticipantes } from '../utils/proyectoUtils';
 import { construirDirectorio, limpiarNombre, mismaPersona } from '../utils/participantesUtils';
+import { ICONOS_PROYECTO, obtenerIconoSugerido } from '../utils/iconoUtils';
 
 const CLASE_CAMPO = 'w-full bg-surface-container-low rounded-lg text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container/30';
 
@@ -15,6 +17,8 @@ const ModalProyecto = ({ proyecto, proyectos = [], onCerrar, onGuardado, onSesio
         clave: proyecto?.clave?.trim() || '',
         proyecto: proyecto?.proyecto || '',
         objetivo: proyecto?.objetivo || '',
+        // Vacío = automático (icono del área de la clave)
+        icono: ICONOS_PROYECTO[proyecto?.icono] ? proyecto.icono : '',
     });
     const [participantes, setParticipantes] = useState(separarParticipantes(proyecto?.participantes));
     const [nuevoParticipante, setNuevoParticipante] = useState('');
@@ -72,6 +76,7 @@ const ModalProyecto = ({ proyecto, proyectos = [], onCerrar, onGuardado, onSesio
             proyecto: formData.proyecto.trim(),
             objetivo: formData.objetivo.trim(),
             participantes: unirParticipantes(lista),
+            icono: formData.icono || null,
         };
 
         const encontrados = validar(datos);
@@ -161,6 +166,14 @@ const ModalProyecto = ({ proyecto, proyectos = [], onCerrar, onGuardado, onSesio
                         />
                         {errores.clave && <span className="font-body-sm text-body-sm text-error">{errores.clave}</span>}
                     </div>
+
+                    {/* Campo: Icono que se muestra en el catálogo */}
+                    <SelectorIcono
+                        valor={formData.icono}
+                        sugerido={obtenerIconoSugerido(formData.clave)}
+                        onCambiar={(icono) => cambiarCampo('icono', icono)}
+                        error={errores.icono}
+                    />
 
                     {/* Campo: Proyecto (título) */}
                     <div className="flex flex-col gap-1.5">

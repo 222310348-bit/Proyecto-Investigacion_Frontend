@@ -33,7 +33,9 @@ SOLO LA PRIMERA VEZ (o en una computadora nueva)
 
 DIRECCIONES DE LA PAGINA
 ------------------------
-  http://localhost:5173/                 Catalogo de proyectos
+  http://localhost:5173/                 Pagina principal (portada, modulos, catalogo y demas secciones)
+  http://localhost:5173/#empresas        Lleva directo a una seccion (#proyectos, #internos,
+                                         #externos, #servicios, #empresas, #convocatorias)
   http://localhost:5173/proyecto/1       Detalle de un proyecto (el numero es su id)
   http://localhost:5173/login            Inicio de sesion de administrador
   http://localhost:5173/admin            Panel: crear, editar y eliminar proyectos
@@ -55,6 +57,11 @@ DETALLES IMPORTANTES
   - Si cambio algo en .env hay que reiniciar: Ctrl + C y otra vez npm run dev.
   - Las carpetas node_modules y dist NO se suben a GitHub (ya estan en .gitignore).
   - Los colores, tipografias y espaciados del diseno estan en tailwind.config.js.
+  - Para que el icono de los proyectos se guarde, la base debe tener la columna ICONO:
+    importar una vez database/03_icono_proyecto.sql del backend.
+  - Textos de Servicios, Empresas y Convocatorias:   src/utils/modulosUtils.js
+  - Contacto, redes, sitio oficial y banners:         src/utils/institucionUtils.js
+    (para cambiar un banner: reemplazar la imagen en public/images)
   - La organizacion de carpetas esta explicada en ARQUITECTURA.md.
 
 
@@ -75,5 +82,7 @@ SI ALGO FALLA
         Revisar mayusculas; si hace falta, cambiar la contrasena desde el backend.
   La pagina se ve sin estilos
         Falto npm install, o se borro postcss.config.js / tailwind.config.js.
+  Al guardar un proyecto sale un error del servidor ("Unknown column 'ICONO'")
+        Falta importar database/03_icono_proyecto.sql en MySQL.
   Me saca del panel y regresa al login
         La sesion expiro (8 horas) o se reinicio el backend con otro JWT_SECRET.

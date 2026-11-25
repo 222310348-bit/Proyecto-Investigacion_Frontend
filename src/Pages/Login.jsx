@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import authService from '../services/authService';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 import Icono from '../Components/Icono';
+import BannerInstitucional from '../Components/BannerInstitucional';
 
 const CLASE_CAMPO = 'w-full h-11 pl-10 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary transition-all';
 
@@ -40,17 +41,23 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-surface flex flex-col justify-center items-center p-space-md">
-            <main className="w-full max-w-md mx-auto">
-                <div className="flex items-center justify-between mb-space-lg">
-                    <Link to="/" className="inline-flex items-center gap-space-xs text-secondary hover:text-primary transition-colors font-label-md text-label-md group">
+        <div className="relative min-h-screen flex flex-col justify-center items-center p-space-md overflow-hidden">
+            <img src="/images/banda-publicaciones.jpg" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-primary-deep/85" aria-hidden="true"></div>
+
+            <main className="relative z-10 w-full max-w-md mx-auto">
+                <div className="bg-surface-container-lowest rounded-xl px-space-md py-space-sm mb-space-md shadow-lg">
+                    <BannerInstitucional ubicacion="encabezado" className="h-10 sm:h-12 mx-auto" />
+                </div>
+                <div className="flex items-center justify-between mb-space-md">
+                    <Link to="/" className="inline-flex items-center gap-space-xs text-on-primary/85 hover:text-on-primary transition-colors font-label-md text-label-md group">
                         <Icono nombre="arrow_back" className="text-[18px] transition-transform group-hover:-translate-x-1" />
                         <span>Volver al portal público de proyectos</span>
                     </Link>
                 </div>
 
                 <section className="w-full bg-surface-container-lowest rounded-xl shadow-xl shadow-secondary/10 overflow-hidden">
-                    <div className="h-1.5 w-full bg-gradient-to-r from-primary via-primary-container to-tertiary"></div>
+                    <div className="h-1.5 w-full bg-gradient-to-r from-primary via-primary-container to-accent"></div>
 
                     <div className="p-space-lg sm:p-space-xl flex flex-col">
                         <div className="flex flex-col items-center text-center mb-space-lg">

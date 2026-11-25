@@ -6,6 +6,7 @@ import Icono from '../Components/Icono';
 import Aviso from '../Components/Aviso';
 import ModalProyecto from '../Components/ModalProyecto';
 import ModalConfirmarEliminar from '../Components/ModalConfirmarEliminar';
+import IconoProyecto from '../Components/IconoProyecto';
 import { obtenerTipo, separarParticipantes, coincideBusqueda } from '../utils/proyectoUtils';
 
 const FILTROS = [
@@ -177,14 +178,19 @@ const AdminProyectos = () => {
                                     return (
                                         <tr key={proyecto.id} className="hover:bg-surface-container-low/60 transition-colors">
                                             <td className="py-space-md px-space-md align-top whitespace-nowrap">
-                                                <span className="inline-block font-code-tech text-code-tech bg-surface-container text-on-surface px-space-sm py-1 rounded">
-                                                    {proyecto.clave.trim()}
-                                                </span>
-                                                {etiqueta && (
-                                                    <span className={`block mt-1 font-label-sm text-label-sm font-semibold px-2 py-0.5 rounded w-max ${etiqueta.clase}`}>
-                                                        {etiqueta.texto}
-                                                    </span>
-                                                )}
+                                                <div className="flex items-start gap-space-sm">
+                                                    <IconoProyecto proyecto={proyecto} tamano="sm" />
+                                                    <div>
+                                                        <span className="inline-block font-code-tech text-code-tech bg-surface-container text-on-surface px-space-sm py-1 rounded">
+                                                            {proyecto.clave.trim()}
+                                                        </span>
+                                                        {etiqueta && (
+                                                            <span className={`block mt-1 font-label-sm text-label-sm font-semibold px-2 py-0.5 rounded w-max ${etiqueta.clase}`}>
+                                                                {etiqueta.texto}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td className="py-space-md px-space-md align-top">
                                                 <h3 className="font-headline-sm text-[16px] text-on-surface font-semibold leading-snug line-clamp-2">
