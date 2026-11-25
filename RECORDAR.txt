@@ -65,6 +65,41 @@ DETALLES IMPORTANTES
   - La organizacion de carpetas esta explicada en ARQUITECTURA.md.
 
 
+PROBAR LA PAGINA DESDE EL CELULAR (misma red que la PC)
+-------------------------------------------------------
+  Desde el celular "localhost" es el propio celular, por eso hay que usar la IP de la PC
+  y cambiar 3 cosas. Se hace solo para probar; al terminar se deja todo como estaba.
+
+  1. Conectar el celular a la misma red que la PC (zona Wi-Fi de Windows o el mismo Wi-Fi).
+  2. Ver la IP de la PC: en PowerShell ejecutar  ipconfig  y copiar la "Direccion IPv4"
+     (ejemplo usado en las pruebas: 192.168.1.6; con la zona Wi-Fi de Windows suele ser
+     192.168.137.1). La IP puede cambiar al reconectarse: si deja de funcionar, repetir este paso.
+  3. Cambiar los dos .env (cuidar que la IP este bien escrita, ese fue el error de las pruebas):
+         Backend  (Proyecto-Investigacion_Backend\.env):
+             CORS_ORIGIN=http://<IP DE LA PC>:5173
+         Frontend (Proyecto-Investigacion_Frontend\.env):
+             VITE_BACKEND_URL=http://<IP DE LA PC>:3000/api
+  4. Reiniciar los dos (Ctrl + C y de nuevo). El .env solo se lee al arrancar, y el backend
+     NO lo recarga solo aunque use node --watch.
+         Backend:   npm run dev
+         Frontend:  npm run dev -- --host
+  5. Abrir en el celular (y tambien en la PC) http://<IP DE LA PC>:5173
+     OJO: el backend solo acepta UNA direccion en CORS_ORIGIN. Con la IP puesta, abrir la
+     pagina como localhost:5173 en la PC deja de cargar los datos; usar tambien la IP.
+  6. Si la pagina abre pero no muestra proyectos, probar en el navegador del celular
+     http://<IP DE LA PC>:3000/api/proyectos
+         - Si no carga: Firewall de Windows. Abrir PowerShell como administrador:
+             New-NetFirewallRule -DisplayName "Dev portal API" -Direction Inbound -Protocol TCP -LocalPort 3000,5173 -Action Allow -Profile Any
+           y al terminar de probar quitarla:
+             Remove-NetFirewallRule -DisplayName "Dev portal API"
+         - Si carga el JSON: revisar F12 > Consola; "blocked by CORS" = CORS_ORIGIN no coincide
+           exactamente con la direccion escrita en el navegador.
+  7. AL TERMINAR devolver los .env a localhost y reiniciar los dos:
+             CORS_ORIGIN=http://localhost:5173
+             VITE_BACKEND_URL=http://localhost:3000/api
+         y volver a usar  npm run dev  a secas en el frontend.
+
+
 OTROS COMANDOS
 --------------
   npm run build      Genera la version final en la carpeta dist
